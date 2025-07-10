@@ -25,17 +25,10 @@
   height: 24px;
   border: solid 1px #ccc;
   border-radius: 2px;
-
-  position: relative;
-  background: var(--gradient-start);
-
-  &::before {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, #0000, var(--gradient-end));
-    filter: url(#step);
-    content: " ";
-  }
+  background-image: var(--image);
+  background-position: 0 0, 10px 0, 20px 0, 30px 0, 40px 0, 50px 0, 60px 0, 70px 0, 80px 0, 90px 0, 100px 0, 110px 0, 120px 0, 130px 0, 140px 0, 150px 0, 160px 0, 170px 0, 180px 0, 190px 0, 200px 0, 210px 0, 220px 0, 230px 0, 240px 0, 250px 0, 260px 0, 270px 0, 280px 0, 290px 0, 300px 0, 310px;
+  background-size: 10px 100%;
+  background-repeat: no-repeat;
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -44,7 +37,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: 0;
   box-shadow: rgba(0, 0, 0, .5) 0 0 3px;
   height: 24px;
-  width: 24px;
+  width: 10px;
 }
 
 
@@ -55,7 +48,7 @@ input[type=range]::-moz-range-thumb {
   border-radius: 0;
   box-shadow: rgba(0, 0, 0, .5) 0 0 3px;
   height: 24px;
-  width: 24px;
+  width: 10px;
 }
 
 .numberInput {

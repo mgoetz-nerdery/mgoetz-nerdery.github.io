@@ -42,6 +42,18 @@ function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: Color
     color === 'green' ? green :
     blue;
 
+  const getGradientStop = (index: number) => {
+    if (color === 'red') {
+      return rgb555torgb888(index, green, blue);
+    }
+    if (color === 'green') {
+      return rgb555torgb888(red, index, blue);
+    }
+    if (color === 'blue') {
+      return rgb555torgb888(red, green, index);
+    }
+  };
+
   useEffect(() => {
     const xCoord = color === 'red' ? green : red;
     const yCoord = color === 'blue' ? green : blue;
@@ -49,21 +61,14 @@ function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: Color
     drawCanvas(canvasRef.current!, color, value, xCoord, yCoord);
   }, [blue, color, green, red, value])
 
-
   const labelClass =
     color === 'red' ? styles.red :
     color === 'green' ? styles.green :
     styles.blue;
 
-  const gradientStart =
-    color === 'red' ? rgb555torgb888(0, green, blue) :
-    color === 'green' ? rgb555torgb888(red, 0, blue) :
-    rgb555torgb888(red, green, 0);
-
-  const gradientEnd =
-    color === 'red' ? rgb555torgb888(31, green, blue) :
-    color === 'green' ? rgb555torgb888(red, 31, blue) :
-    rgb555torgb888(red, green, 31);
+  const backgroundColor = Array.from({ length: 32 }).map((_, index) => 
+    `linear-gradient(${getGradientStop(index)}, ${getGradientStop(index)})`
+  ).join(', ');
 
   const triggerCanvas = (e: MouseEvent) => {
     const rect = canvasRef.current!.getBoundingClientRect();
@@ -79,6 +84,7 @@ function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: Color
   };
 
   const sliderId = `${color}-slider`;
+  const textId = `${color}-text`;
   const canvasId = `${color}-canvas`;
   return (
     <div className={styles.colorSliderColumn}>
@@ -93,9 +99,10 @@ function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: Color
         value={value}
         onChange={e => setValue(Number(e.target.value))}
         className={styles.sliderInput}
-        style={{'--gradient-start': gradientStart, '--gradient-end': gradientEnd} as React.CSSProperties}
+        style={{'--image': backgroundColor} as React.CSSProperties}
       />
       <input
+        id={textId}
         type="number"
         min={0}
         max={31}
