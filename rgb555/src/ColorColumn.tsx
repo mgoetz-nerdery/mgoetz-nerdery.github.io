@@ -72,8 +72,8 @@ function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: Color
 
   const triggerCanvas = (e: MouseEvent) => {
     const rect = canvasRef.current!.getBoundingClientRect();
-    const x = Math.floor((e.clientX - rect.left) / CANVAS_PIXEL_SIZE);
-    const y = Math.floor((e.clientY - rect.top) / CANVAS_PIXEL_SIZE);
+    const x = Math.max(Math.min(Math.floor((e.clientX - rect.left) / CANVAS_PIXEL_SIZE), 31), 0);
+    const y = Math.max(Math.min(Math.floor((e.clientY - rect.top) / CANVAS_PIXEL_SIZE), 31), 0);
     canvasHandler(x, y);
   };
 
