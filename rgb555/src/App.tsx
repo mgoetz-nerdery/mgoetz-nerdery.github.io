@@ -46,9 +46,9 @@ function App() {
         </div>
       </div>
       <div className={styles.colorPickerRow}>
-        <ColorColumn color="red" red={red} green={green} blue={blue} setValue={setRed} />
-        <ColorColumn color="green" red={red} green={green} blue={blue} setValue={setGreen} />
-        <ColorColumn color="blue" red={red} green={green} blue={blue} setValue={setBlue} />
+        <ColorColumn color="red" red={red} green={green} blue={blue} setValue={setRed} canvasHandler={(x, y) => { setGreen(x); setBlue(y); } } />
+        <ColorColumn color="green" red={red} green={green} blue={blue} setValue={setGreen} canvasHandler={(x, y) => { setRed(x); setBlue(y); }} />
+        <ColorColumn color="blue" red={red} green={green} blue={blue} setValue={setBlue} canvasHandler={(x, y) => { setRed(x); setGreen(y); }} />
       </div>
     </div>
   );

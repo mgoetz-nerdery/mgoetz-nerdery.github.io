@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type MouseEvent } from 'react';
 import styles from './ColorColumn.module.css';
 import rgb555torgb888 from './utils/rgb555torgb888';
 
@@ -8,6 +8,7 @@ type ColorColumnProps = {
   green: number;
   blue: number;
   setValue: (v: number) => void;
+  canvasHandler: (x: number, y: number) => void;
 };
 
 const CANVAS_SIZE = 384;
@@ -33,7 +34,7 @@ const drawCanvas = (canvas: HTMLCanvasElement, color: 'red' | 'green' | 'blue', 
   context.strokeRect(xCoord * CANVAS_PIXEL_SIZE, yCoord * CANVAS_PIXEL_SIZE, CANVAS_PIXEL_SIZE, CANVAS_PIXEL_SIZE);
 };
 
-function ColorColumn({ color, red, green, blue, setValue }: ColorColumnProps) {
+function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: ColorColumnProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const value = 
@@ -64,6 +65,19 @@ function ColorColumn({ color, red, green, blue, setValue }: ColorColumnProps) {
     color === 'green' ? rgb555torgb888(red, 31, blue) :
     rgb555torgb888(red, green, 31);
 
+  const triggerCanvas = (e: MouseEvent) => {
+    const rect = canvasRef.current!.getBoundingClientRect();
+    const x = Math.floor((e.clientX - rect.left) / CANVAS_PIXEL_SIZE);
+    const y = Math.floor((e.clientY - rect.top) / CANVAS_PIXEL_SIZE);
+    canvasHandler(x, y);
+  };
+
+  const onCanvasMouseMove = (e: MouseEvent) => {
+    if (e.buttons === 1) {
+      triggerCanvas(e);
+    }
+  };
+
   const sliderId = `${color}-slider`;
   const canvasId = `${color}-canvas`;
   return (
@@ -89,7 +103,15 @@ function ColorColumn({ color, red, green, blue, setValue }: ColorColumnProps) {
         onChange={e => setValue(Number(e.target.value))}
         className={styles.numberInput}
       />
-      <canvas id={canvasId} width={CANVAS_SIZE} height={CANVAS_SIZE} className={styles.colorCanvas} ref={canvasRef} />
+      <canvas
+        id={canvasId}
+        width={CANVAS_SIZE}
+        height={CANVAS_SIZE}
+        className={styles.colorCanvas}
+        onMouseDown={triggerCanvas}
+        onMouseMove={onCanvasMouseMove}
+        ref={canvasRef}
+      />
     </div>
   );
 }
