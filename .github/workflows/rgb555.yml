@@ -4,7 +4,7 @@ name: Deploy RGB555 using Vite
 on:
   # Runs on pushes targeting the default branch
   push:
-    paths: ["rgb555"]
+    paths: ["./rgb555"]
     branches: ['main']
 
   # Allows you to run this workflow manually from the Actions tab
