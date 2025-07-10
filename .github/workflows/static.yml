@@ -3,9 +3,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: ["main"]
-    paths: ["cards"]
-  
+    branches: ["main"]  
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -34,11 +32,32 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+          cache-dependency-path: './rgb555'
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: "./rgb555"
+      - name: Build
+        run: pnpm build
+        working-directory: "./rgb555"
+      - name: Copy files to dist
+        run: |
+          mkdir dist
+          cp -R cards/ dist/cards
+          cp -R rgb555/dist/ dist/rgb555
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
