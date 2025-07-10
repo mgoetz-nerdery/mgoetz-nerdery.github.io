@@ -42,15 +42,17 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
+        working-directory: "./rgb555"
       - name: Build
         run: pnpm build
+        working-directory: "./rgb555"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
-          path: './dist'
+          path: './rgb555/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
