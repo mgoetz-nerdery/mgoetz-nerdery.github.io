@@ -41,7 +41,7 @@ function App() {
             className={styles.selectedColorText}
             style={{ color: textColor }}
           >
-            {displayColor}
+            ({red}, {green}, {blue}) = {displayColor}
           </span>
         </div>
       </div>
