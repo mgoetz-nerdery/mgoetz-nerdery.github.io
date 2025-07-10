@@ -40,6 +40,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: './rgb555'
       - name: Install dependencies
         run: pnpm install
         working-directory: "./rgb555"
