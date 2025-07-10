@@ -14,6 +14,14 @@ type ColorColumnProps = {
 const CANVAS_SIZE = 384;
 const CANVAS_PIXEL_SIZE = CANVAS_SIZE / 32;
 
+const clamp = (value: number, min: number, max: number) => {
+  return Math.min(Math.max(value, min), max);
+};
+
+const normalize = (value: number) => {
+  return clamp(Math.floor(value), 0, 31);
+}
+
 const drawCanvas = (canvas: HTMLCanvasElement, color: 'red' | 'green' | 'blue', value: number, xCoord: number, yCoord: number) => {
   const context = canvas.getContext('2d');
   if (!context) {
@@ -72,8 +80,8 @@ function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: Color
 
   const triggerCanvas = (e: MouseEvent) => {
     const rect = canvasRef.current!.getBoundingClientRect();
-    const x = Math.max(Math.min(Math.floor((e.clientX - rect.left) / CANVAS_PIXEL_SIZE), 31), 0);
-    const y = Math.max(Math.min(Math.floor((e.clientY - rect.top) / CANVAS_PIXEL_SIZE), 31), 0);
+    const x = normalize((e.clientX - rect.left) / CANVAS_PIXEL_SIZE);
+    const y = normalize((e.clientY - rect.top) / CANVAS_PIXEL_SIZE);
     canvasHandler(x, y);
   };
 
@@ -107,7 +115,7 @@ function ColorColumn({ color, red, green, blue, setValue, canvasHandler }: Color
         min={0}
         max={31}
         value={value}
-        onChange={e => setValue(Number(e.target.value))}
+        onChange={e => setValue(normalize(Number(e.target.value)))}
         className={styles.numberInput}
       />
       <canvas

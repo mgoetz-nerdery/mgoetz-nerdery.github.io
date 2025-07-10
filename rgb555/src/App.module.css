@@ -28,6 +28,6 @@
 .colorPickerRow {
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  gap: 60px;
   justify-content: center;
 }
