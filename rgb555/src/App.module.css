@@ -12,12 +12,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
   font-family: monospace;
 }
 
 .selectedColorText {
-  font-size: 2.4em;
+  font-size: 2em;
 }
 
 .colorPickerApp {

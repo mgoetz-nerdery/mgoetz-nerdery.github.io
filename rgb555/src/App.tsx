@@ -29,7 +29,7 @@ function App() {
   const contrastBlack = (L + 0.05) / 0.05;
   const textColor = contrastWhite > contrastBlack ? '#fff' : '#222';
 
-  const binary = (red * 2048 + green * 64 + blue * 2).toString(16).padStart(4, '0');
+  const hex = (red * 2048 + green * 64 + blue * 2).toString(16).padStart(4, '0');
 
   return (
     <div className={styles.colorPickerApp}>
@@ -39,12 +39,15 @@ function App() {
           className={styles.selectedColorDisplay}
           style={{ background: displayColor }}
         >
-          <span
+          <div
             className={styles.selectedColorText}
             style={{ color: textColor }}
           >
-            {binary} ({red}, {green}, {blue}) = {displayColor}
-          </span>
+            <div>{displayColor}</div>
+            <div>{red}, {green}, {blue}</div>
+            <div>{red.toString(2).padStart(5, '0')} {green.toString(2).padStart(5, '0')} {blue.toString(2).padStart(5, '0')} 0</div>
+            <div>0x{hex}</div>
+          </div>
         </div>
       </div>
       <div className={styles.colorPickerRow}>
