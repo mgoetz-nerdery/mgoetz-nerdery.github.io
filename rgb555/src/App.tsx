@@ -29,6 +29,8 @@ function App() {
   const contrastBlack = (L + 0.05) / 0.05;
   const textColor = contrastWhite > contrastBlack ? '#fff' : '#222';
 
+  const binary = (red * 2048 + green * 64 + blue * 2).toString(16).padStart(4, '0');
+
   return (
     <div className={styles.colorPickerApp}>
       <h1>RGB555 Color Picker</h1>
@@ -41,7 +43,7 @@ function App() {
             className={styles.selectedColorText}
             style={{ color: textColor }}
           >
-            ({red}, {green}, {blue}) = {displayColor}
+            {binary} ({red}, {green}, {blue}) = {displayColor}
           </span>
         </div>
       </div>
