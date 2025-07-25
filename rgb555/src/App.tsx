@@ -45,9 +45,14 @@ function App() {
           >
             <div>{displayColor}</div>
             <div>{red}, {green}, {blue}</div>
-            <div>{red.toString(2).padStart(5, '0')} {green.toString(2).padStart(5, '0')} {blue.toString(2).padStart(5, '0')} 0</div>
             <div>0x{hex}</div>
           </div>
+        </div>
+        <div className={styles.selectedColorText}>
+          <span style={{color: 'red'}}>{red.toString(2).padStart(5, '0')}</span>
+          <span style={{color: 'green'}}>{green.toString(2).padStart(5, '0')}</span>
+          <span style={{color: 'blue'}}>{blue.toString(2).padStart(5, '0')}</span>
+          <span>0</span>
         </div>
       </div>
       <div className={styles.colorPickerRow}>

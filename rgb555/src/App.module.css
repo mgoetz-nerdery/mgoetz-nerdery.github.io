@@ -12,10 +12,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: monospace;
 }
 
 .selectedColorText {
+  font-family: monospace;
   font-size: 2em;
 }
 
